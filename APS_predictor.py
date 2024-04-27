@@ -42,7 +42,7 @@ if runmapperplus:
 
             colslens.append(st.columns((1, 1)))
             lens_input.append(colslens[i][0].number_input('Resolution'+str(i),min_value=1, max_value=100,step=1,value=8))
-            lens_input.append(colslens[i][1].number_input('Gain'+str(i),min_value=0.0000001,format=%f, max_value=0.9999999,step=0.00000001,value=0.6))
+            lens_input.append(colslens[i][1].number_input('Gain'+str(i),min_value=0.0000001,format='%f', max_value=0.9999999,step=0.00000001,value=0.6))
         lenses=set(lens_input)
                     
     
