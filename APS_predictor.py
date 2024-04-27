@@ -35,9 +35,9 @@ if runmapperplus:
         gn=[]
         for i in range(7):
             st.markdown("## Parameter "+str(i)+" Range")
-            cols = st.columns((1, 1))
-            res.append(cols[0].number_input('Resolution',min_value=1, max_value=100,step=1,value=8))
-            gn.append(cols[1].number_input('Gain',min_value=0.0000001, max_value=0.9999999,value=0.6))
+            #cols = st.columns((1, 1))
+            res.append(number_input('Resolution',min_value=1, max_value=100,step=1,value=8))
+            gn.append(number_input('Gain',min_value=0.0000001, max_value=0.9999999,value=0.6))
             #min = cols[0].number_input('Mininum value',min_value=-10000000000, max_value=1000000000000,value=0.00000001)
             #max = cols[1].number_input('Maximum value',min_value=-10000000000, max_value=1000000000000,value=0.00000001)
             #max = cols[1].number_input('Steps',min_value=2, max_value=1000,step=1,value=2)
