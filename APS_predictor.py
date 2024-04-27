@@ -38,14 +38,17 @@ if runmapperplus:
         #with st.form("Lenses"):
         colslens=[]
         #lens_input=[]
+        grids=[
         for i in range(7):
 
             colslens.append(st.columns((1, 1, 1)))
-            a=colslens[i][0].number_input('Resolution'+str(i),min_value=1, max_value=100,step=1,value=8)
-            b=colslens[i][1].number_input('Gain'+str(i),min_value=0.0000001,format='%f', max_value=0.9999999,step=0.00000001,value=0.6)
-            c=colslens[i][2].number_input('Resolutions'+str(i),min_value=1, max_value=100,step=1,value=8)
+            mn=colslens[i][0].number_input(str(i)+':Min',min_value=0.0000001,format='%f', max_value=0.9999999,step=0.00000001,value=0.6)
+            mx=colslens[i][1].number_input(str(i)+':Max',min_value=0.0000001,format='%f', max_value=0.9999999,step=0.00000001,value=0.6)
+            st=colslens[i][2].number_input(str(i)+':Steps',min_value=1, max_value=100,step=1,value=8)
+            grids.append(np.linspace(mn, mx, st))
+            print(grids[i])
 
-        lenses=set(lens_input)
+        #lenses=set(lens_input)
                     
     
     #with st.form("parameters"):
