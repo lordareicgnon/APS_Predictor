@@ -37,6 +37,7 @@ if runmapperplus:
         fens_input=[]
         #with st.form("Lenses"):
         colslens=[]
+        lens_input=[]
         for i in range(7):
 
             a=int(i/2)
