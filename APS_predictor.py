@@ -34,14 +34,18 @@ if runmapperplus:
         res=[]
         gn=[]
         cls=[]
-        for i in range(7):
-            cls.append(st.columns((1, 1)))
-            #st.markdown("## Parameter "+str(i)+" Range")
-            res.append(cls[i][0].number_input('Resolution',min_value=1, max_value=100,step=1,value=8))
-            gn.append(cls[i][1].number_input('Gain',min_value=0.0000001, max_value=0.9999999,value=0.6))
-            #min = cols[0].number_input('Mininum value',min_value=-10000000000, max_value=1000000000000,value=0.00000001)
-            #max = cols[1].number_input('Maximum value',min_value=-10000000000, max_value=1000000000000,value=0.00000001)
-            #max = cols[1].number_input('Steps',min_value=2, max_value=1000,step=1,value=2)
+        fens_input=[]
+        #with st.form("Lenses"):
+        colslens=[]
+        for i in range(Nl):
+
+            a=int(i/2)
+            b=i-2*a
+            if b==0:
+                colslens.append(st.columns((1, 1)))
+            lens_input.append(colslens[a][b].selectbox(
+            "Lens "+str(i+1)+":", ["PCA", "IsolationForest", "L2 Norm"], index=0))
+        lenses=set(lens_input)
             
     
     #with st.form("parameters"):
