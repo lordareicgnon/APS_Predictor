@@ -40,12 +40,11 @@ if runmapperplus:
         lens_input=[]
         for i in range(7):
 
-            a=int(i/2)
-            b=i-2*a
-            if b==0:
-                colslens.append(st.columns((1, 1)))
-            lens_input.append(colslens[a][b].selectbox(
-            "Lens "+str(i+1)+":", ["PCA", "IsolationForest", "L2 Norm"], index=0))
+            colslens.append(st.columns((1, 1)))
+            lens_input.append(colslens[i][0].selectbox(
+            "Lens "+str(i)+"_0"+":", ["PCA", "IsolationForest", "L2 Norm"], index=0))
+            lens_input.append(colslens[i][1].selectbox(
+            "Lens "+str(i)+"_0"+":", ["PCA", "IsolationForest", "L2 Norm"], index=0))
         lenses=set(lens_input)
             
     
