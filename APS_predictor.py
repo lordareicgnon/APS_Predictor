@@ -34,7 +34,7 @@ if runmapperplus:
         cols = st.columns((7, 3))
         for i in range(7):
             st.markdown("## Parameter "+str(i)+" Range")
-            resolution = cols[0].number_input('Resolution',min_value=1, max_value=100,step=1,value=8)
+            resolution = cols[i][0].number_input('Resolution',min_value=1, max_value=100,step=1,value=8)
             #min = cols[0].number_input('Mininum value',min_value=-10000000000, max_value=1000000000000,value=0.00000001)
             #max = cols[1].number_input('Maximum value',min_value=-10000000000, max_value=1000000000000,value=0.00000001)
             #max = cols[1].number_input('Steps',min_value=2, max_value=1000,step=1,value=2)
