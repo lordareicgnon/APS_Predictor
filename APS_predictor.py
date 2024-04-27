@@ -33,7 +33,7 @@ if runmapperplus:
     else:
         res=[]
         gn=[]
-        cls=[
+        cls=[]
         for i in range(7):
             st.markdown("## Parameter "+str(i)+" Range")
             cls.append(st.columns((1, 1)))
