@@ -3,40 +3,45 @@ import numpy as np
 from download_button_file import download_button
 import importlib
 
-def pred_with_sparse(A,train_ind,train_labels,t=1,eps=0.0000001,inter=1):
-    N=A.shape[0]
-    m=np.max(train_labels)+1
-    U=np.zeros((N,m))
-    U[train_ind,train_labels]=1
-    #w=np.matmul(A,np.sum(A,axis=0))#-diagn
-    V=np.matmul(A,np.matmul(A.T,U))#-U*diagn[:,None]
+def predict(A,B,Q,eps=0.0000001):
+    V=np.matmul(A,B)
     w=np.sum(V,axis=1)
-    #print(sum(w==0))
-    Wtot=np.matmul(w,U)
-    Q=np.matmul(V.T,U)/Wtot
+    m=Q.shape[0]
     f=1/Q[range(m),range(m)]
     lgQ=np.log(Q+eps*(Q==0))
-    #F=np.matmul(V,lgQ*f[:,None])-(w[:,None]*np.matmul(f,Q))
     F=np.matmul(V/w[:,None],lgQ*f[:,None])-(np.matmul(f,Q))
-    test_ind=list(set(range(N))-set(train_ind))
-    #print(np.array(test_ind))
-    return np.argmax(F[test_ind,:],axis=1)
-
-
-def village_kernel_pred(X,W,y,train_ind,symmetrize=0,insig=1,wt=1):
-    Y=np.matmul(X,W)
-    B=distance_sq(Y,y)*insig*wt
-    if symmetrize:        
-        A1=np.exp(-B+np.min(B,axis=1)[:,None])
-        A2=np.exp(-B+np.min(B[train_ind,:],axis=0))
-        A=A1/np.sum(A1,axis=1)[:,None]+A2/np.sum(A2[train_ind,:],axis=0)
+    if len(A.shape)==1:
+        return np.argmax(F)
     else:
-        A=np.exp(-B)
+        return np.argmax(F,axis=1)
+
+def village_kernel_predict(X_test,W,y,minA2,sumA2):
+    Y=np.matmul(X_test,W)
+    B=distance_sq(Y,y)
+    A1=np.exp(-B+np.min(B,axis=1)[:,None])
+    A2=np.exp(-B+minA2)
+    A=A1/np.sum(A1,axis=1)[:,None]+A2/sumA2
     return A
 
 def distance_sq(x,y):
     return -2*np.matmul(x,y.T)+np.sum(x*x,axis=1)[:,None]+np.sum(y*y,axis=1)
 
+def repeated_stuff(X,W,y,labels):
+    U=np.zeros((len(labels),2))
+    U[range(len(labels)),labels]=1
+    Y=np.matmul(X,W)
+    B=distance_sq(Y,y)
+    A1=np.exp(-B+np.min(B,axis=1)[:,None])
+    minA2=np.min(B,axis=0)
+    A2=np.exp(-B+minA2)
+    sumA2=np.sum(A2,axis=0)
+    A=A1/np.sum(A1,axis=1)[:,None]+A2/sumA2
+    w=np.matmul(A,np.sum(A,axis=0))#-diagn
+    B=np.matmul(A.T,U)
+    V=np.matmul(A,B)
+    Wtot=np.matmul(w,U)
+    Q=np.matmul(V.T,U)/Wtot
+    return [minA2,sumA2,B,Q]
 
 
 run=0
@@ -104,7 +109,7 @@ if runmapperplus:
                 if b==0:
                     colslens.append(st.columns((1, 1)))
                 All_pars.append(colslens[a][b].number_input('Par '+str(i),min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1))
-                
+             All_pars=np.array(All_pars)   
 
     
 
@@ -116,3 +121,20 @@ if runmapperplus:
         with st.form(key="my_form"):
 
             run=st.form_submit_button(label="Predict")
+            if run:
+                X_test=(All_pars-np.mean(X,axis=0))/np.std(X,axis=0)
+                labels_fin=np.ones(len(X_test))
+                target=np.load('APS_target.npy')
+                X_trans=np.load('Whole_filtered_APS_Data.npy')
+                for cn in range(7):
+                    W=np.load('all_data_W_condi'+str(cn)+'_9d.npy')
+                    y=np.load('all_data_y_condi'+str(cn)+'_9d.npy')
+                    [minA2,sumA2,B,Q]=repeated_stuff(X_trans,W,y,target[:,cn])
+                    A=village_kernel_predict(X_test,W,y,minA2,sumA2)   
+                    labels=predict(A,B,Q)
+                    if (len(All_pars.shape)==1):
+                        st.write("##### Condition 1:"+str(labels))
+                    labels_fin=labels_fin*labels
+                labels_str+=str(labels_fin)[1:-1]
+                download_button(labels_str,'Predicted_Val','Download Disjoint Clusters')    
+
