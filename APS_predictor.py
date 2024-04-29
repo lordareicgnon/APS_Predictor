@@ -146,6 +146,6 @@ if runmapperplus:
                     if (len(All_pars.shape)==1):
                         st.write("##### Condition 1:"+str(labels))
                     labels_fin=labels_fin*labels
-                labels_str+=str(labels_fin)[1:-1]
+                labels_str=str(labels_fin)[1:-1]
                 download_button(labels_str,'Predicted_Val','Download Disjoint Clusters')    
 
