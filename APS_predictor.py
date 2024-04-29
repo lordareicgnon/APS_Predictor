@@ -109,7 +109,7 @@ if runmapperplus:
                 if b==0:
                     colslens.append(st.columns((1, 1)))
                 All_pars.append(colslens[a][b].number_input('Par '+str(i),min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1))
-             All_pars=np.array(All_pars)   
+            All_pars=np.array(All_pars)   
 
     
 
