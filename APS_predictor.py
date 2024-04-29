@@ -24,7 +24,12 @@ def village_kernel_predict(X_test,W,y,minA2,sumA2):
     return A
 
 def distance_sq(x,y):
-    return -2*np.matmul(x,y.T)+np.sum(x*x,axis=1)[:,None]+np.sum(y*y,axis=1)
+    if len(x.shape)==1:
+        return-2*np.matmul(x,y.T)+np.sum(x*x)+np.sum(y*y,axis=1)
+
+    else:
+
+        return -2*np.matmul(x,y.T)+np.sum(x*x,axis=1)[:,None]+np.sum(y*y,axis=1)
 
 def repeated_stuff(X,W,y,labels):
     U=np.zeros((len(labels),2))
