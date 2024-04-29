@@ -150,7 +150,7 @@ if runmapperplus:
                     labels=predict(A,B,Q)
                     if (len(All_pars.shape)==1):
                         lbls=['Not Satisfied', 'Satisfied']
-                        st.write("##### Condition "+str(i)+": "+lbls[labels])
+                        st.write("##### Condition "+str(cn)+": "+lbls[labels])
                     labels_fin=labels_fin*labels
                 labels_str=str(labels_fin)[1:-1]
                 download_button(labels_str,'Predicted_Val','Download Disjoint Clusters')    
