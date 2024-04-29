@@ -52,7 +52,7 @@ if runmapperplus:
         Parcheck=np.meshgrid(grids[0],grids[1],grids[2],grids[3],grids[4],grids[5],grids[6])
         All_pars=[]
         for p in range(7):
-            All_pars.append(list(np.reshape(grids[0],totsize)))
+            All_pars.append(list(np.reshape(Parcheck[0],totsize)))
         All_pars=np.array(All_pars).T
         Print(All_pars.shape)
 
