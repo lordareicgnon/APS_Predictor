@@ -84,7 +84,7 @@ if runmapperplus:
             #lens_input=[]
             grids=[]
             totsize=1
-            for i in range(7):
+            for i in range(9):
     
                 colslens.append(st.columns((1, 1, 1)))
                 mn=colslens[i][0].number_input('Par '+str(i)+' Min',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1)
@@ -93,16 +93,16 @@ if runmapperplus:
                 grids.append(np.linspace(mn, mx, stp))
                 totsize=totsize*grids[0].shape[0]
                 print(grids[i])
-            Parcheck=np.meshgrid(grids[0],grids[1],grids[2],grids[3],grids[4],grids[5],grids[6])
+            Parcheck=np.meshgrid(grids[0],grids[1],grids[2],grids[3],grids[4],grids[5],grids[6],grids[7],grids[8])
             All_pars=[]
-            for p in range(7):
+            for p in range(9):
                 All_pars.append(list(np.reshape(Parcheck[0],totsize)))
             All_pars=np.array(All_pars).T
             print('Here:'+str(All_pars.shape))
         else:
             colslens=[]
             All_pars=[]
-            for i in range(7):
+            for i in range(9):
     
                 a=int(i/2)
                 b=i-2*a
