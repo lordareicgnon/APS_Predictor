@@ -54,7 +54,7 @@ if runmapperplus:
         for p in range(7):
             All_pars.append(list(np.reshape(Parcheck[0],totsize)))
         All_pars=np.array(All_pars).T
-        print(All_pars.shape)
+        print('Here:'+str(All_pars.shape))
 
         #lenses=set(lens_input)
                     
