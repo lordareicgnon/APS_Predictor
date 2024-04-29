@@ -3,6 +3,18 @@ import numpy as np
 from download_button_file import download_button
 import importlib
 
+def list2csv2D(lst,headers=[],lst2=None):
+    strng=str(headers)[1:-1]
+    N=len(lst)
+    j=0
+    for ls in lst:
+        strng+='\n'+str(ls)[1:-1]
+        if lst2 is not None:
+            strng+=','+str(lst2[i])[1:-1]
+        
+    return strng
+        
+
 def predict(A,B,Q,eps=0.0000001):
     V=np.matmul(A,B)
     if len(A.shape)==1:
