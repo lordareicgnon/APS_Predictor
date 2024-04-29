@@ -3,6 +3,42 @@ import numpy as np
 from download_button_file import download_button
 import importlib
 
+def pred_with_sparse(A,train_ind,train_labels,t=1,eps=0.0000001,inter=1):
+    N=A.shape[0]
+    m=np.max(train_labels)+1
+    U=np.zeros((N,m))
+    U[train_ind,train_labels]=1
+    #w=np.matmul(A,np.sum(A,axis=0))#-diagn
+    V=np.matmul(A,np.matmul(A.T,U))#-U*diagn[:,None]
+    w=np.sum(V,axis=1)
+    #print(sum(w==0))
+    Wtot=np.matmul(w,U)
+    Q=np.matmul(V.T,U)/Wtot
+    f=1/Q[range(m),range(m)]
+    lgQ=np.log(Q+eps*(Q==0))
+    #F=np.matmul(V,lgQ*f[:,None])-(w[:,None]*np.matmul(f,Q))
+    F=np.matmul(V/w[:,None],lgQ*f[:,None])-(np.matmul(f,Q))
+    test_ind=list(set(range(N))-set(train_ind))
+    #print(np.array(test_ind))
+    return np.argmax(F[test_ind,:],axis=1)
+
+
+def village_kernel_pred(X,W,y,train_ind,symmetrize=0,insig=1,wt=1):
+    Y=np.matmul(X,W)
+    B=distance_sq(Y,y)*insig*wt
+    if symmetrize:        
+        A1=np.exp(-B+np.min(B,axis=1)[:,None])
+        A2=np.exp(-B+np.min(B[train_ind,:],axis=0))
+        A=A1/np.sum(A1,axis=1)[:,None]+A2/np.sum(A2[train_ind,:],axis=0)
+    else:
+        A=np.exp(-B)
+    return A
+
+def distance_sq(x,y):
+    return -2*np.matmul(x,y.T)+np.sum(x*x,axis=1)[:,None]+np.sum(y*y,axis=1)
+
+
+
 run=0
 st.write("""
 # APS Predictor
@@ -77,12 +113,6 @@ if runmapperplus:
     
     #with st.form("parameters"):
     if uploaded_file or Sample_data:
-        st.markdown("## Hyper Parameters")
-
-        cols = st.columns((1, 1))
-        villages = cols[0].number_input('Number of villages',min_value=1, max_value=data.shape[0],step=1,value=np.minimum(200,X.shape[0]))
-        neighbors = cols[1].number_input('Number of nearest neighbors',min_value=1, max_value=data.shape[0],step=1,value=np.minimum(20,X.shape[0]))
-        #new_method=st.checkbox('Use new method',False)
         with st.form(key="my_form"):
 
-            run=st.form_submit_button(label="Cluster")
+            run=st.form_submit_button(label="Predict")
