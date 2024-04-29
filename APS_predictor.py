@@ -89,7 +89,7 @@ if runmapperplus:
                 colslens.append(st.columns((1, 1, 1)))
                 mn=colslens[i][0].number_input('Par '+str(i)+' Min',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1)
                 mx=colslens[i][1].number_input('Par '+str(i)+' Max',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.7)
-                stp=colslens[i][2].number_input('Par '+str(i)+' Steps',min_value=1, max_value=100,step=1,value=8)
+                stp=colslens[i][2].number_input('Par '+str(i)+' Steps',min_value=1, max_value=100,step=1,value=2)
                 grids.append(np.linspace(mn, mx, stp))
                 totsize=totsize*grids[0].shape[0]
                 print(grids[i])
