@@ -59,9 +59,17 @@ if runmapperplus:
             All_pars=np.array(All_pars).T
             print('Here:'+str(All_pars.shape))
         else:
-            cols=st.columns((2, 2, 1))
+            colslens=[]
+            All_pars=[]
             for i in range(7):
-                cols[i].number_input('Par '+str(i),min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1)
+    
+                a=int(i/2)
+                b=i-2*a
+                if b==0:
+                    colslens.append(st.columns((1, 1)))
+                All_pars.append(colslens[a][b].number_input('Par '+str(i),min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1))
+                
+
     
 
         #lenses=set(lens_input)
