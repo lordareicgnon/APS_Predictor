@@ -39,6 +39,7 @@ if runmapperplus:
         colslens=[]
         #lens_input=[]
         grids=[]
+        totsize=1
         for i in range(7):
 
             colslens.append(st.columns((1, 1, 1)))
@@ -46,7 +47,14 @@ if runmapperplus:
             mx=colslens[i][1].number_input('Par '+str(i)+' Max',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.7)
             stp=colslens[i][2].number_input('Par '+str(i)+' Steps',min_value=1, max_value=100,step=1,value=8)
             grids.append(np.linspace(mn, mx, stp))
+            totsize=totsize*grids[0].shape[0]
             print(grids[i])
+        Parcheck=np.meshgrid(grids[0],grids[1],grids[2],grids[3],grids[4],grids[5],grids[6])
+        All_pars=[]
+        for p in range(7):
+            All_pars.append(list(np.reshape(grids[0],totsize)))
+        All_pars=np.array(All_pars).T
+        Print(All_pars.shape)
 
         #lenses=set(lens_input)
                     
