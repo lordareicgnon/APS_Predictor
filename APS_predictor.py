@@ -149,7 +149,8 @@ if runmapperplus:
                     A=village_kernel_predict(X_test,W,y,minA2,sumA2)   
                     labels=predict(A,B,Q)
                     if (len(All_pars.shape)==1):
-                        st.write("##### Condition 1:"+str(labels))
+                        lbls=['Not Satisfied', 'Satisfied']
+                        st.write("##### Condition "+str(i)+": "+lbls[labels])
                     labels_fin=labels_fin*labels
                 labels_str=str(labels_fin)[1:-1]
                 download_button(labels_str,'Predicted_Val','Download Disjoint Clusters')    
