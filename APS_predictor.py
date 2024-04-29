@@ -19,7 +19,7 @@ def village_kernel_predict(X_test,W,y,minA2,sumA2):
     Y=np.matmul(X_test,W)
     B=distance_sq(Y,y)
     A2=np.exp(-B+minA2)
-    if len(X_test.shape>1):
+    if len(X_test.shape)>1:
         A1=np.exp(-B+np.min(B,axis=1)[:,None])
         A=A1/np.sum(A1,axis=1)[:,None]+A2/sumA2
     else:
