@@ -18,9 +18,13 @@ def predict(A,B,Q,eps=0.0000001):
 def village_kernel_predict(X_test,W,y,minA2,sumA2):
     Y=np.matmul(X_test,W)
     B=distance_sq(Y,y)
-    A1=np.exp(-B+np.min(B,axis=1)[:,None])
     A2=np.exp(-B+minA2)
-    A=A1/np.sum(A1,axis=1)[:,None]+A2/sumA2
+    if len(X_test.shape>1):
+        A1=np.exp(-B+np.min(B,axis=1)[:,None])
+        A=A1/np.sum(A1,axis=1)[:,None]+A2/sumA2
+    else:
+        A1=np.exp(-B+np.min(B))
+        A=A1/np.sum(A1)+A2/sumA2
     return A
 
 def distance_sq(x,y):
