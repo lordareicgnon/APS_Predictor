@@ -123,7 +123,7 @@ if runmapperplus:
             run=st.form_submit_button(label="Predict")
             if run:
                 X=np.load('Whole_filtered_APS_Data.npy')
-                X=(X-np.mean(X,axis=0))/np.std(X,axis=0)
+                X_trans=(X-np.mean(X,axis=0))/np.std(X,axis=0)
                 X_test=(All_pars-np.mean(X,axis=0))/np.std(X,axis=0)
                 labels_fin=np.ones(len(X_test))
                 target=np.load('APS_target.npy')
