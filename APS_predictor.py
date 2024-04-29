@@ -5,11 +5,16 @@ import importlib
 
 def predict(A,B,Q,eps=0.0000001):
     V=np.matmul(A,B)
-    w=np.sum(V,axis=1)
+    if len(A.shape)==1:
+        w=np.sum(V)
+        Vow=V/w
+    else:
+        w=np.sum(V,axis=1)
+        Vow=V/w[:,None]
     m=Q.shape[0]
     f=1/Q[range(m),range(m)]
     lgQ=np.log(Q+eps*(Q==0))
-    F=np.matmul(V/w[:,None],lgQ*f[:,None])-(np.matmul(f,Q))
+    F=np.matmul(Vow,lgQ*f[:,None])-(np.matmul(f,Q))
     if len(A.shape)==1:
         return np.argmax(F)
     else:
