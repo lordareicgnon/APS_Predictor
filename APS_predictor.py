@@ -4,7 +4,7 @@ from download_button_file import download_button
 import importlib
 
 def list2csv2D(lst,headers=[],lst2=None):
-    strng=str(headers)[1:-1]
+    strng=headers
     N=len(lst)
     j=0
     for ls in lst:
