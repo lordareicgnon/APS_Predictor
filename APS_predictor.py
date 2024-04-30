@@ -142,7 +142,7 @@ if runmapperplus:
                 b=i-2*a
                 if b==0:
                     colslens.append(st.columns((1, 1)))
-                All_pars.append(colslens[a][b].number_input('Par '+str(i),min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1))
+                All_pars.append(colslens[a][b].number_input(par_names[i]+':',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1))
             All_pars=np.array(All_pars)   
 
     
@@ -161,7 +161,7 @@ if runmapperplus:
                 X_test=(All_pars-np.mean(X,axis=0))/np.std(X,axis=0)
                 labels_fin=np.ones(len(X_test))
                 target=np.load('APS_target.npy')
-                
+                all_pred_labels=np.zeros((len(X_test),8))
                 for cn in range(7):
                     W=np.load('all_data_W_condi'+str(cn)+'_9d.npy')
                     y=np.load('all_data_y_condi'+str(cn)+'_9d.npy')
@@ -171,7 +171,12 @@ if runmapperplus:
                     if (len(All_pars.shape)==1):
                         lbls=['Not Satisfied', 'Satisfied']
                         st.write("##### Condition "+str(cn)+": "+lbls[labels])
-                    labels_fin=labels_fin*labels
-                labels_str=str(labels_fin)[1:-1]
-                download_button(labels_str,'Predicted_Val','Download Disjoint Clusters')    
+                    else:
+                        all_pred_labels[:,cn]=labels
+                        labels_fin=labels_fin*labels
+                #labels_str=str(labels_fin)[1:-1]
+                if (len(All_pars.shape)>1):
+                    all_pred_labels[:,7]=labels_fin
+                    file_str=list2csv2D(list(All_pars),headers=Headers1,lst2=list(all_pred_labels))
+                    download_button(file_str,'Predicted_Val','Download Results')    
 
