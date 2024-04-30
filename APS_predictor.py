@@ -178,5 +178,5 @@ if runmapperplus:
                 if (len(All_pars.shape)>1):
                     all_pred_labels[:,7]=labels_fin
                     file_str=list2csv2D(list(All_pars),headers=Headers1,lst2=list(all_pred_labels))
-                    download_button(file_str,'Predicted_Val','Download Results')    
+                    download_button(file_str,'Predicted_Val.csv','Download Results')    
 
