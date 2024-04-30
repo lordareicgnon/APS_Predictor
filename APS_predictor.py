@@ -177,6 +177,7 @@ if runmapperplus:
                         labels_fin=labels_fin*labels
                 #labels_str=str(labels_fin)[1:-1]
                 st.write(str(sum(labels_fin)))
+                st.write(str(sum(labels_fin*target)))
                 if (len(All_pars.shape)>1):
                     all_pred_labels[:,7]=labels_fin
                     file_str=list2csv2D(All_pars.tolist(),headers=Headers1,lst2=all_pred_labels.tolist())
