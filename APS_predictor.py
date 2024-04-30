@@ -3,7 +3,7 @@ import numpy as np
 from download_button_file import download_button
 import importlib
 
-Headers1="pCa, kfca, IbarNCX, ks, koCa, ec50SR, Vmax_SRCaP, Kmf, Kmr, M-CaSR-diastolic, M-CaSR-release,	 M-CaSR-Vmax, M-CaSR-tau, M-CaT-diastolic	, M-CaT-systolic, M-CaT-tau, Acceptable"
+Headers1="pCa, kfca, IbarNCX, ks, koCa, ec50SR, Vmax_SRCaP, Kmf, Kmr, M-CaSR-diastolic, M-CaSR-release, M-CaSR-Vmax, M-CaSR-tau, M-CaT-diastolic, M-CaT-systolic, M-CaT-tau, Acceptable"
 
 Headers2="pCa, kfca, IbarNCX, ks, koCa, ec50SR, Vmax_SRCaP, Kmf, Kmr"
 
