@@ -159,7 +159,7 @@ if runmapperplus:
                 X=np.load('Whole_filtered_APS_Data.npy')
                 X_trans=(X-np.mean(X,axis=0))/np.std(X,axis=0)
                 X_test=(All_pars-np.mean(X,axis=0))/np.std(X,axis=0)
-                X_test=X_trans.copy()
+                #X_test=X_trans.copy()
                 labels_fin=np.ones(len(X_test))
                 target=np.load('APS_target.npy')
                 all_pred_labels=np.zeros((len(X_test),8))
@@ -171,13 +171,13 @@ if runmapperplus:
                     labels=predict(A,B,Q)
                     if (len(All_pars.shape)==1):
                         lbls=['Not Satisfied', 'Satisfied']
-                        st.write("##### Condition "+str(cn)+": "+lbls[labels])
+                        st.write("#####"+condi_names[cn]+": "+lbls[labels])
                     else:
                         all_pred_labels[:,cn]=labels
                         labels_fin=labels_fin*labels
                 #labels_str=str(labels_fin)[1:-1]
-                st.write(str(sum(labels_fin)))
-                st.write(str(sum(labels_fin*(np.sum(target,axis=1)==7))))
+                #st.write(str(sum(labels_fin)))
+                #st.write(str(sum(labels_fin*(np.sum(target,axis=1)==7))))
                 if (len(All_pars.shape)>1):
                     all_pred_labels[:,7]=labels_fin
                     file_str=list2csv2D(All_pars.tolist(),headers=Headers1,lst2=all_pred_labels.tolist())
