@@ -171,7 +171,7 @@ if runmapperplus:
                     labels=predict(A,B,Q)
                     if (len(All_pars.shape)==1):
                         lbls=['Not Satisfied', 'Satisfied']
-                        st.write("#####"+condi_names[cn]+": "+lbls[labels])
+                        st.write("##### "+condi_names[cn]+": "+lbls[labels])
                     else:
                         all_pred_labels[:,cn]=labels
                         labels_fin=labels_fin*labels
