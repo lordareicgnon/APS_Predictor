@@ -3,7 +3,7 @@ import numpy as np
 from download_button_file import download_button
 import importlib
 
-def list2csv2D(lst,headers=[],lst2=None):
+def list2csv2D(lst,headers='',lst2=None):
     strng=headers
     N=len(lst)
     j=0
