@@ -3,6 +3,14 @@ import numpy as np
 from download_button_file import download_button
 import importlib
 
+Headers1="pCa, kfca, IbarNCX, ks, koCa, ec50SR, Vmax_SRCaP, Kmf, Kmr, M-CaSR-diastolic, M-CaSR-release,	 M-CaSR-Vmax, M-CaSR-tau, M-CaT-diastolic	, M-CaT-systolic, M-CaT-tau, Acceptable"
+
+Headers2="pCa, kfca, IbarNCX, ks, koCa, ec50SR, Vmax_SRCaP, Kmf, Kmr"
+
+par_names=['pCa', 'kfca', 'IbarNCX', 'ks', 'koCa', 'ec50SR', 'Vmax_SRCaP', 'Kmf', 'Kmr']
+
+condi_names=['M-CaSR-diastolic', 'M-CaSR-release',	 'M-CaSR-Vmax', 'M-CaSR-tau', 'M-CaT-diastolic'	, 'M-CaT-systolic', 'M-CaT-tau']
+
 def list2csv2D(lst,headers='',lst2=None):
     strng=headers
     N=len(lst)
@@ -77,14 +85,14 @@ st.write("""
 
 runmapperplus=1
 if runmapperplus:
-    st.markdown("## Upload data for Clustering")
+    st.markdown("## Upload data")
     see_results=0
     uploaded_file='False'
     with st.expander("ℹ️ More information"):
         st.write("Upload data in CSV format with no headers.")
     #with st.sidebar:
     Sample_data = st.checkbox(
-        "Predict for the following range", False, help="Pen Digits Dataset")
+        "Manually put values", False)
 
 
     if not Sample_data:
@@ -99,7 +107,7 @@ if runmapperplus:
 
     else:
         multi_values = st.checkbox(
-        "Use Multiple Values", False, help="Pen Digits Dataset")
+        "Use Multiple Values", False)
         if multi_values:
             res=[]
             gn=[]
@@ -113,9 +121,9 @@ if runmapperplus:
             for i in range(9):
     
                 colslens.append(st.columns((1, 1, 1)))
-                mn=colslens[i][0].number_input('Par '+str(i)+' Min',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1)
-                mx=colslens[i][1].number_input('Par '+str(i)+' Max',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.7)
-                stp=colslens[i][2].number_input('Par '+str(i)+' Steps',min_value=1, max_value=100,step=1,value=2)
+                mn=colslens[i][0].number_input(par_names[i]+': Min',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.1)
+                mx=colslens[i][1].number_input(par_names[i]+': Max',min_value=-10000000000.0000001,format='%f', max_value=1000000000.9999999,step=0.00000001,value=0.7)
+                stp=colslens[i][2].number_input(par_names[i]+': Steps',min_value=1, max_value=100,step=1,value=2)
                 grids.append(np.linspace(mn, mx, stp))
                 totsize=totsize*grids[0].shape[0]
                 print(grids[i])
